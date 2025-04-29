@@ -1,7 +1,7 @@
 #Project files
 .DS_Store
 *.sql
-*.txt
+secrets.txt
 package-lock.json
 
 #Node

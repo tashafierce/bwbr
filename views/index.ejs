@@ -1,0 +1,80 @@
+<%- include('partials/header.ejs') %>
+<nav>
+    <ul id="nav">
+        <li>Sort by</li>
+        <li id="sort-title"><a href="#sort-title">title</a>,</li>
+        <li id="sort-date"><a href="#sort-date">newest</a>, or</li>
+        <li id="sort-rating"><a href="#sort-rating">best</a></li> | <li id="create-jump"><a href="#new-review">Write your own</a></li>
+    </ul>
+</nav>
+<header>
+    <h1>Bathroom Wall Book Reviews</h1>
+</header>
+<main>
+    <section id="container">
+        <div class="sort-container">
+            <%if (locals.reviews) {%>
+                <% locals.reviews.forEach((review) => {%>
+                   <div class="review-container" id="review-<%-review.id%>">
+                      <div class="image" id="image-container-<%-review.id%>">
+                            <img src="<%-review.image_path%>" id="image-<%-review.id%>">
+                        </div>
+                        <div class="title-container" id="title-container-<%-review.id%>">
+                            <h2 id="h2-<%-review.id%>">
+                                <span class="title" id="title-<%-review.id%>"><%-review.title%></span>, by <span id="author-<%-review.id%>"><%-review.author%></span>
+                            </h2>
+                        </div>
+                        <div class="meta" id="meta-container-<%-review.id%>">
+                            <ul id="ul-<%-review.id%>"><li id="li-isbn-<%-review.id%>">ISBN-13: <span id="isbn-<%-review.id%>"><%-review.isbn%></span></li> | 
+                                <li id="li-reviewer-<%-review.id%>">Reviewed by <span id="reviewer-<%-review.id%>"><%-review.reviewer%></span></li> | <li
+                                    id="li-date_entered-<%-review.id%>">Date reviewed: <span
+                                        class="date_entered" id="date_entered-<%-review.id%>" class="date_entered"><%-review.date_entered%></span></li> | <li
+                                    id="li-rating-<%-review.id%>">Rating: <span id="rating-<%-review.id%>" class="rating"><%-review.rating%></span>/5</li>
+                            </ul>
+                            <span class="user" id="<%-review.user_id%>"></span>
+                        </div>
+                        <div class="description" id="description-<%-review.id%>">
+                            <%-review.description%>
+                        </div>
+                        <div class="review" id="review-content-<%-review.id%>">
+                            <%-review.review%>
+                        </div>
+                        <div class="edit-review-links" id="edit-review-links-<%-review.id%>"><a href="#edit" id="edit-review-<%-review.id%>" class="edit-review" >edit</a> | <a href="/delete/<%-review.id%>" id="delete-review-<%-review.id%>" class="delete-review">delete</a>
+                        </div>
+                     </div>
+                <%})%>
+            <%}%>
+        </div>
+        <a name="new-review"><button id="new-review-link">Leave a new review!</button></a>
+                <div id="create-review" class="hidden">
+                    <form method="post" action="/add" name="new-review" id="new-review-form" class="review-form">
+                        <input type="hidden" name="user_id" value="1">
+                        <label for="new-review-by" class="l">Your name:</label>
+                        <input type="text" name="reviewer" id="new-review-by" placeholder="Name" class="i" required>
+                        <label for="new-review-title" class="l" required>Book:</label>
+                        <input type="text" name="title" id="new-review-title" placeholder="Book you're reviewing" required>
+                        <label for="new-review-author" class="l">Book author:</label>
+                        <input type="text" name="author" id="new-review-author" placeholder="Author's name" class="i" required>
+                        <label for="new-isbn" class="l">ISBN-13 (you can search at <a href="https://isbnsearch.org/">ISBNsearch.org</a>):</label>
+                        <input type="text" name="isbn" id="new-isbn" placeholder="ISBN" required class="i">
+                        <span class="l">Rating from 0 to 5 (0=worst, 5=best):</span>
+                        <div class="i">
+                            <div id="star-rating">
+                                <div class="star new"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" zoomAndPan="magnify" viewBox="0 0 75 74.999997" height="100" preserveAspectRatio="xMidYMid meet" version="1.0"><defs><clipPath id="d8645421c3"><path d="M 2.695312 4.152344 L 72.445312 4.152344 L 72.445312 70.902344 L 2.695312 70.902344 Z M 2.695312 4.152344 " clip-rule="nonzero"/></clipPath></defs><g clip-path="url(#d8645421c3)"><path fill="#ffffff" d="M 37.496094 55.183594 L 59.011719 70.84375 L 50.773438 45.558594 L 72.289062 30.25 L 45.902344 30.25 L 37.496094 4.152344 L 29.085938 30.25 L 2.699219 30.25 L 24.214844 45.558594 L 16.007812 70.84375 Z M 37.496094 55.183594 " fill-opacity="1" fill-rule="nonzero"/></g></svg></div>
+                                <div class="star new"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" zoomAndPan="magnify" viewBox="0 0 75 74.999997" height="100" preserveAspectRatio="xMidYMid meet" version="1.0"><defs><clipPath id="d8645421c3"><path d="M 2.695312 4.152344 L 72.445312 4.152344 L 72.445312 70.902344 L 2.695312 70.902344 Z M 2.695312 4.152344 " clip-rule="nonzero"/></clipPath></defs><g clip-path="url(#d8645421c3)"><path fill="#ffffff" d="M 37.496094 55.183594 L 59.011719 70.84375 L 50.773438 45.558594 L 72.289062 30.25 L 45.902344 30.25 L 37.496094 4.152344 L 29.085938 30.25 L 2.699219 30.25 L 24.214844 45.558594 L 16.007812 70.84375 Z M 37.496094 55.183594 " fill-opacity="1" fill-rule="nonzero"/></g></svg></div>
+                                <div class="star new"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" zoomAndPan="magnify" viewBox="0 0 75 74.999997" height="100" preserveAspectRatio="xMidYMid meet" version="1.0"><defs><clipPath id="d8645421c3"><path d="M 2.695312 4.152344 L 72.445312 4.152344 L 72.445312 70.902344 L 2.695312 70.902344 Z M 2.695312 4.152344 " clip-rule="nonzero"/></clipPath></defs><g clip-path="url(#d8645421c3)"><path fill="#ffffff" d="M 37.496094 55.183594 L 59.011719 70.84375 L 50.773438 45.558594 L 72.289062 30.25 L 45.902344 30.25 L 37.496094 4.152344 L 29.085938 30.25 L 2.699219 30.25 L 24.214844 45.558594 L 16.007812 70.84375 Z M 37.496094 55.183594 " fill-opacity="1" fill-rule="nonzero"/></g></svg></div>
+                                <div class="star new"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" zoomAndPan="magnify" viewBox="0 0 75 74.999997" height="100" preserveAspectRatio="xMidYMid meet" version="1.0"><defs><clipPath id="d8645421c3"><path d="M 2.695312 4.152344 L 72.445312 4.152344 L 72.445312 70.902344 L 2.695312 70.902344 Z M 2.695312 4.152344 " clip-rule="nonzero"/></clipPath></defs><g clip-path="url(#d8645421c3)"><path fill="#ffffff" d="M 37.496094 55.183594 L 59.011719 70.84375 L 50.773438 45.558594 L 72.289062 30.25 L 45.902344 30.25 L 37.496094 4.152344 L 29.085938 30.25 L 2.699219 30.25 L 24.214844 45.558594 L 16.007812 70.84375 Z M 37.496094 55.183594 " fill-opacity="1" fill-rule="nonzero"/></g></svg></div>
+                                <div class="star new"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" zoomAndPan="magnify" viewBox="0 0 75 74.999997" height="100" preserveAspectRatio="xMidYMid meet" version="1.0"><defs><clipPath id="d8645421c3"><path d="M 2.695312 4.152344 L 72.445312 4.152344 L 72.445312 70.902344 L 2.695312 70.902344 Z M 2.695312 4.152344 " clip-rule="nonzero"/></clipPath></defs><g clip-path="url(#d8645421c3)"><path fill="#ffffff" d="M 37.496094 55.183594 L 59.011719 70.84375 L 50.773438 45.558594 L 72.289062 30.25 L 45.902344 30.25 L 37.496094 4.152344 L 29.085938 30.25 L 2.699219 30.25 L 24.214844 45.558594 L 16.007812 70.84375 Z M 37.496094 55.183594 " fill-opacity="1" fill-rule="nonzero"/></g></svg></div>
+                            </div>
+                            <input type="hidden" name="rating" id="new-rating" value="0">
+                        </div>
+                        <label for="new-book-description" class="l">Book summary:</label>
+                        <textarea name="description" id="new-book-description" placeholder="Synopsis" class="i"></textarea>
+                        <label for="new-book-review" class="l">Review: (5,000 char max)</label>
+                        <textarea name="review" id="new-book-review" placeholder="Review text goes here (5000 characters or less)." class="i" required></textarea>
+                        <input type="submit" id="new-review-button" class="button">
+                    </form>
+                </div>
+    </section>
+</main>
+<%- include('partials/footer.ejs') %>

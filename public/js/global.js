@@ -1,5 +1,6 @@
 // REVIEW FUNCTIONS
  
+// add sort listeners
   if (document.querySelectorAll(".review-container")) {
     const title = document.getElementById("sort-title");
     title.addEventListener("click", (e) => {
@@ -17,13 +18,13 @@
     });
   };
 
-  function sortReviews(e, property) {
-    if (property.toString().toLowerCase() === "title") {
+  function sortReviews(e, property) { // function to sort reviews by title, date entered, and rating
+    if (property.toString().toLowerCase() === "title") { 
        const titles = document.querySelectorAll(".title");
-       var fragment = new DocumentFragment();
+       var fragment = new DocumentFragment(); // where we will store the re-ordered DOM elements
        var titleList = [];
 
-       titles.forEach((title, index) => {
+       titles.forEach((title, index) => { // grab id of review container for title so we can know which review # it is
          titleList.push({title: title.textContent, parentId: title.parentElement.parentElement.parentElement.id});
          index++;
        });
@@ -33,7 +34,7 @@
          const titleA = a.title.toLowerCase();
          const titleB = b.title.toLowerCase();
          
-         if (titleA < titleB) {
+         if (titleA < titleB) { // alphabetize
            return -1;
          };
          if (titleA > titleB) {
@@ -42,17 +43,17 @@
          return 0;
        });
 
-       var reorderedList = [];
-       const parentElements = [...list];
+       var reorderedList = []; // where we will store the list of newly re-ordered titles
+       const parentElements = [...list]; // list of parent review #s in alphabetical order
 
-       for (var i = 0; i < parentElements.length; i++) {
-          reorderedList[i] = document.getElementById(list[i].parentId);
+       for (var i = 0; i < parentElements.length; i++) { // grab each review and put it in the order of the new list
+          reorderedList[i] = document.getElementById(list[i].parentId); 
        };
-       for (i = 0; i < reorderedList.length; i++) {
-         fragment.append(reorderedList[i]);
+       for (i = 0; i < reorderedList.length; i++) { // add reordered reviews to document fragment
+         fragment.append(reorderedList[i]); 
        };
        var sort = document.querySelector(".sort-container");
-       sort.append(fragment);
+       sort.append(fragment); // replace current page of reviews with alphabetized reviews
      };
 
      if (property.toString().toLowerCase() === "date") {
@@ -65,7 +66,7 @@
          index++;
        });
 
-       var list = dateList.sort((a, b) => {
+       var list = dateList.sort((a, b) => { 
            let dateA = a.dateEntered;
            let dateB = b.dateEntered;
            
@@ -78,7 +79,7 @@
            newDateA = newDateA.valueOf();
            newDateB = newDateB.valueOf();
 
-           if (newDateA > newDateB) {
+           if (newDateA > newDateB) { // sort by newest first
              return -1;
            }
            if (newDateA < newDateB) {
@@ -113,7 +114,7 @@
        var list = ratingsList.sort((a, b) => {
           let ratingA = parseInt(a.rating);
           let ratingB = parseInt(b.rating);
-          if (ratingA > ratingB) {
+          if (ratingA > ratingB) { // sort by highest rating
             return -1;
           }
           if (ratingA < ratingB) {
@@ -136,7 +137,7 @@
      };
    };
 
-document.getElementById("new-review-link").addEventListener("click", function(e) {
+document.getElementById("new-review-link").addEventListener("click", function(e) { // show new review form
       document.getElementById("create-review").classList.toggle("hidden");
 });
   
@@ -146,28 +147,29 @@ let result = 0;
 var editReviewClass = document.querySelectorAll('.edit-review');    
 var editReviewClassLength = document.querySelectorAll(".edit-review").length;
 
+// edit review function
 for (i = 0; i < editReviewClassLength; i++) {
   document.querySelectorAll('.edit-review')[i].addEventListener("click", function (e) {
     
     if (document.querySelector(".edit-review-form")) {
-      document.querySelector(".edit-review-form").remove();
+      document.querySelector(".edit-review-form").remove(); // check to see if we already have an edit form open and close it (having more than one of these in the DOM will break the rating function)
      } else {
 
-      var id = this.id;
+      var id = this.id; // capture which review triggered the edit form
       console.log(id);
-      if (editReviewClassLength > 10) {
+      if (editReviewClassLength > 10) { // make sure we're grabbing the whole id for > single digit ids
         id = id.substring((id.length - 2), id.length);
       } else {
         id = id.substring((id.length - 1), id.length);
       };
       console.log(id);
-
-      var frag = new DocumentFragment();
-      var container = frag.appendChild(document.createElement("div"));
+    
+      var frag = new DocumentFragment();   // create the fragment to store the form we'll append
+      var container = frag.appendChild(document.createElement("div")); 
       container.setAttribute("id", `edit-review-container-${id}`);
       container.classList.add("edit-review-form", "hidden");
 
-      var form = container.appendChild(document.createElement("form"));
+      var form = container.appendChild(document.createElement("form")); 
       form.setAttribute("method", "post");
       form.setAttribute("action", "/edit");
       form.setAttribute("name", "edit-review");
@@ -298,14 +300,14 @@ for (i = 0; i < editReviewClassLength; i++) {
       input.setAttribute("value", "Submit");
       input.classList.add("button");
 
-      var currentReviewContainer = document.getElementById(`review-${id}`);
+      var currentReviewContainer = document.getElementById(`review-${id}`); // grab the review we're adding this form to
 
-      currentReviewContainer.append(frag);
+      currentReviewContainer.append(frag); // append the form to the review
 
-      let editStars = document.querySelectorAll(".edit");
+      let editStars = document.querySelectorAll(".edit"); // grab the rating stars
       result = 0;
 
-      editStars.forEach((item, index) => {
+      editStars.forEach((item, index) => { // add the event listeners for the rating function
         item.addEventListener("click", (e) => {
           result = index + 1;
           if (e.detail === 2) { // check for double-click to remove last star
@@ -317,15 +319,15 @@ for (i = 0; i < editReviewClassLength; i++) {
           document.getElementById(`edit-rating-${id}`).value = parseInt(result); // update hidden field for db input
         });
       });
-      document.getElementById(`edit-review-container-${id}`).classList.toggle("hidden");
+      document.getElementById(`edit-review-container-${id}`).classList.toggle("hidden"); // we're all done, so show the newly created/inserted form
     };
   });
 }; 
 
-const newStars = document.querySelectorAll(".new");
+const newStars = document.querySelectorAll(".new"); // last verse, same as the first - grab rating stars for new reviews
 result = 0;
 
-if (document.getElementById("new-review-form")) {
+if (document.getElementById("new-review-form")) { // add the event listeners
      newStars.forEach((item, index) => {
           item.addEventListener("click", (e) => {
           result = index + 1; 

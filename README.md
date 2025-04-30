@@ -12,14 +12,10 @@ These instructions will get you a copy of the project up and running on your loc
 [npm] (https://www.npmjs.com/)
 [Express.js] (https://expressjs.com/)
 
-```
-Give examples
-```
-
 ### Installing
 
 ```
-git clone https://github.com/tashafierce/bwbr.git
+git clone https://github.com/tashafierce/bwbr.
 ```
 ```
 npm i
@@ -33,7 +29,7 @@ IDK, upload this to a web host. Make sure you update the values in index.js betw
 * [Node.js](https://nodejs.org/docs/latest/api/) - Runtime environment
 * [Express](https://maven.apache.org/) - Web app framework
 * [Axios](https://axios-http.com/docs/intro) - used for retreiving book covers via Open Library API
-* [pg] (https://www.npmjs.com/package/pg) - For db connect
+* [pg](https://www.npmjs.com/package/pg) - For db connect
 
 ## Contributing
 

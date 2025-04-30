@@ -15,7 +15,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Installing
 
 ```
-git clone https://github.com/tashafierce/bwbr.
+git clone https://github.com/tashafierce/bwbr.git
 ```
 ```
 npm i

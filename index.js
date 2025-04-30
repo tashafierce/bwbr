@@ -12,8 +12,8 @@ const apiURL = "https://covers.openlibrary.org/b/isbn/";
 const db = new pg.Client({
   user: "postgres",
   host: "localhost",
-  database: "",
-  password: "",
+  database: "book",
+  password: "User-Error-2025!",
   port: 5432,
 });
 

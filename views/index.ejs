@@ -1,4 +1,15 @@
 <%- include('partials/header.ejs') %>
+<%if (locals.error == "noResult") {%>
+    <header>
+        <h1>Bathroom Wall Book Reviews</h1>
+    </header>
+    <main>
+        <section id="container">
+            <p>No results!</p>
+        </section>
+    </main>
+<%}%>
+<%if (locals.reviews) {%>
 <nav>
     <ul id="nav">
         <li>Sort by</li>
@@ -9,11 +20,16 @@
 </nav>
 <header>
     <h1>Bathroom Wall Book Reviews</h1>
+    <%if (locals.error == "noBook") {%>
+        <p>Book does not exist! Check your ISBN.</p>
+    <%}%>
+    <%if (locals.error == "unk") {%>
+        <p>An unknown error has occurred.</p>
+    <%}%>
 </header>
-<main>
+ <main>
     <section id="container">
         <div class="sort-container">
-            <%if (locals.reviews) {%>
                 <% locals.reviews.forEach((review) => {%>
                    <div class="review-container" id="review-<%-review.id%>">
                       <div class="image" id="image-container-<%-review.id%>">

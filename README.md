@@ -20,6 +20,9 @@ git clone https://github.com/tashafierce/bwbr.git
 ```
 npm i
 ```
+```
+nodemon index.js
+```
 ## Deployment
 
 IDK, upload this to a web host. Make sure you update the values in index.js between "// BEGIN: CHANGE THE BELOW VALUES IF DEPLOYING" and "//END". 
